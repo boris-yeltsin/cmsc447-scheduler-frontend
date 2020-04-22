@@ -1,3 +1,14 @@
 <mat-toolbar>
   <span>{{title}}</span>
 </mat-toolbar>
+<mat-tab-group>
+  <mat-tab label="Classrooms">
+    <app-classes-wrapper></app-classes-wrapper>
+  </mat-tab>
+  <mat-tab label="Classes">
+    <app-classroom-wrapper></app-classroom-wrapper>
+  </mat-tab>
+  <mat-tab label="Optimized Schedule">
+    <app-schedule-wrapper></app-schedule-wrapper>
+  </mat-tab>
+</mat-tab-group>
