@@ -1,7 +1,7 @@
 <mat-toolbar>
   <span>{{title}}</span>
 </mat-toolbar>
-<mat-tab-group>
+<!--<mat-tab-group>
   <mat-tab label="Classrooms">
     <app-classes-wrapper></app-classes-wrapper>
   </mat-tab>
@@ -11,4 +11,19 @@
   <mat-tab label="Optimized Schedule">
     <app-schedule-wrapper></app-schedule-wrapper>
   </mat-tab>
-</mat-tab-group>
+</mat-tab-group>-->
+
+<mat-horizontal-stepper [linear]="false" #stepper>
+  <mat-step>
+    <ng-template matStepLabel>Add Classrooms</ng-template>
+    <app-classes-wrapper></app-classes-wrapper>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Add Classes</ng-template>
+    <app-classroom-wrapper></app-classroom-wrapper>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Optimize Schedule</ng-template>
+    <app-schedule-wrapper></app-schedule-wrapper>
+  </mat-step>
+</mat-horizontal-stepper>
