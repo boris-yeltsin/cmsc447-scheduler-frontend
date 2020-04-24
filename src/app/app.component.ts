@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SchedulerService } from './scheduler.service';
-import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 
@@ -11,20 +10,8 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
 })
 export class AppComponent {
   title = 'Classroom Scheduler';
-  classroomsAdded = false;
-  classesAdded = false;
 
   constructor(private schedulerService: SchedulerService, public dialog: MatDialog) {
-    this.schedulerService.classes.pipe(
-      tap((c) => {
-        this.classesAdded = c.length > 0;
-      })
-    ).subscribe();
-    this.schedulerService.classrooms.pipe(
-      tap((c) => {
-        this.classroomsAdded = c.length > 0;
-      })
-    ).subscribe();
     this.schedulerService.error.subscribe(e => {this.showError(e)});
   }
 

@@ -14,11 +14,13 @@ import { ClassesModule } from './classes/classes.module';
 import { ClassroomsModule } from './classrooms/classrooms.module'
 import { ScheduleModule } from './schedule/schedule.module';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { ScheduleWizardComponent } from './schedule-wizard/schedule-wizard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    ScheduleWizardComponent
   ],
   imports: [
     BrowserModule,

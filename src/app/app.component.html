@@ -1,25 +1,4 @@
 <mat-toolbar>
   <span>{{title}}</span>
 </mat-toolbar>
-
-<mat-horizontal-stepper [linear]="false" #stepper>
-  <mat-step>
-    <ng-template matStepLabel>Add Classrooms</ng-template>
-    <app-classroom-wrapper></app-classroom-wrapper>
-    <mat-divider></mat-divider>
-    <button disabled="{{!classroomsAdded}}" mat-raised-button color="primary" matStepperNext>Next</button>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Add Classes</ng-template>
-    <app-classes-wrapper></app-classes-wrapper>
-    <mat-divider></mat-divider>
-    <button mat-raised-button color="primary" matStepperPrevious>Back</button>
-    <button disabled="{{!classesAdded}}" mat-raised-button color="primary" matStepperNext>Next</button>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Generate Schedule</ng-template>
-    <app-schedule-wrapper></app-schedule-wrapper>
-    <mat-divider></mat-divider>
-    <button mat-raised-button color="primary" matStepperPrevious>Back</button>
-  </mat-step>
-</mat-horizontal-stepper>
+<app-schedule-wizard></app-schedule-wizard>
