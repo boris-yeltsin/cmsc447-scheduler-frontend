@@ -1,33 +1,24 @@
 <mat-toolbar>
   <span>{{title}}</span>
 </mat-toolbar>
-<!--<mat-tab-group>
-  <mat-tab label="Classrooms">
-    <app-classes-wrapper></app-classes-wrapper>
-  </mat-tab>
-  <mat-tab label="Classes">
-    <app-classroom-wrapper></app-classroom-wrapper>
-  </mat-tab>
-  <mat-tab label="Optimized Schedule">
-    <app-schedule-wrapper></app-schedule-wrapper>
-  </mat-tab>
-</mat-tab-group>-->
 
 <mat-horizontal-stepper [linear]="false" #stepper>
   <mat-step>
     <ng-template matStepLabel>Add Classrooms</ng-template>
     <app-classroom-wrapper></app-classroom-wrapper>
-    <button mat-raised-button color="accent" matStepperNext>Next</button>
+    <mat-divider></mat-divider>
+    <button disabled="{{!classroomsAdded}}" mat-raised-button color="primary" matStepperNext>Next</button>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Add Classes</ng-template>
     <app-classes-wrapper></app-classes-wrapper>
-    <button mat-button color="accent" matStepperPrevious>Back</button>
-    <button mat-raised-button color="accent" matStepperNext>Next</button>
+    <mat-divider></mat-divider>
+    <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+    <button disabled="{{!classesAdded}}" mat-raised-button color="primary" matStepperNext>Next</button>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Generate Schedule</ng-template>
     <app-schedule-wrapper></app-schedule-wrapper>
-    <button mat-button color="accent" matStepperPrevious>Back</button>
+    <button mat-raised-button color="primary" matStepperPrevious>Back</button>
   </mat-step>
 </mat-horizontal-stepper>
