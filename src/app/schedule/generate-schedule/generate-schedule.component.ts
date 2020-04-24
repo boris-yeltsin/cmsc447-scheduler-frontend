@@ -7,6 +7,7 @@ import { SchedulerService } from 'src/app/scheduler.service';
   styleUrls: ['./generate-schedule.component.css']
 })
 export class GenerateScheduleComponent implements OnInit {
+  loading: boolean = false;
 
   constructor(private schedulerService: SchedulerService) { }
 
@@ -14,6 +15,17 @@ export class GenerateScheduleComponent implements OnInit {
   }
 
   generateSchedule() {
-    this.schedulerService.validateAndGetSchedule();
+    this.loading = true;
+    this.schedulerService.validateAndGetSchedule().subscribe(
+      r => {
+        this.loading = false;
+      },
+      e => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 }

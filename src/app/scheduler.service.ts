@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { BehaviorSubject, Observable, EMPTY } from 'rxjs';
+import { catchError, retry, map } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
 
@@ -43,27 +43,36 @@ export class SchedulerService {
     this.error = new BehaviorSubject<string>('');
   }
 
-  validateAndGetSchedule(): void {
+  validateAndGetSchedule(): Observable<void> {
     const classrooms = this.classrooms.value;
     const classes = this.classes.value;
     const classroomError = this.validateClassrooms(classrooms);
     if(classroomError) {
       this.errorHandler(classroomError);
-      return;
+      return EMPTY;
     }
     const classError = this.validateClasses(classes);
     if(classError) {
       this.errorHandler(classError);
-      return;
+      return EMPTY;
     }
-    this.getSchedule(classes, classrooms).subscribe(
+    return this.getSchedule(classes, classrooms).pipe(
+      map(data => {
+        this.schedule.next(data);
+      }),
+      catchError(e => {
+        this.errorHandler(e.message);
+        throw(e);
+      })
+    );
+    /*this.getSchedule(classes, classrooms).subscribe(
       data => {
         this.schedule.next(data);
       },
       error => {
         this.errorHandler(error.message);
       }
-    );
+    );*/
   }
 
   getSchedule(classes, classrooms): Observable<ScheduledClass[]> {
