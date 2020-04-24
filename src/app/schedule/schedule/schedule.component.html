@@ -1,0 +1,60 @@
+<div class="table-container mat-elevation-z8" *ngIf="dataSource.length">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Subject Column -->
+      <ng-container matColumnDef="subject">
+        <th mat-header-cell *matHeaderCellDef> Subject </th>
+        <td mat-cell *matCellDef="let class"> {{class.subject}} </td>
+      </ng-container>
+  
+      <!-- Course # Column -->
+      <ng-container matColumnDef="course">
+        <th mat-header-cell *matHeaderCellDef> Course # </th>
+        <td mat-cell *matCellDef="let class"> {{class.course}} </td>
+      </ng-container>
+  
+      <!-- Course Title Column -->
+      <ng-container matColumnDef="course_title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let class"> {{class.course_title}} </td>
+      </ng-container>
+  
+      <!-- Ver. Column -->
+      <ng-container matColumnDef="ver">
+        <th mat-header-cell *matHeaderCellDef> Ver. </th>
+        <td mat-cell *matCellDef="let class"> {{class.ver}} </td>
+      </ng-container>
+  
+      <!-- Sec. Column -->
+      <ng-container matColumnDef="sec">
+        <th mat-header-cell *matHeaderCellDef> Sec. </th>
+        <td mat-cell *matCellDef="let class"> {{class.sec}} </td>
+      </ng-container>
+  
+      <!-- Instructor Column -->
+      <ng-container matColumnDef="instructor_real_name">
+        <th mat-header-cell *matHeaderCellDef> Instructor </th>
+        <td mat-cell *matCellDef="let class"> {{class.instructor_real_name}} </td>
+      </ng-container>
+  
+      <!-- Time Column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef> Time </th>
+        <td mat-cell *matCellDef="let class"> {{class.time}} </td>
+      </ng-container>
+
+      <!-- Classroom Column -->
+      <ng-container matColumnDef="classroom">
+          <th mat-header-cell *matHeaderCellDef> Classroom </th>
+          <td mat-cell *matCellDef="let class"> {{class.classroom}} </td>
+      </ng-container>
+  
+      <!-- Capacity Column -->
+      <ng-container matColumnDef="capacity">
+        <th mat-header-cell *matHeaderCellDef> Capacity </th>
+        <td mat-cell *matCellDef="let class"> {{class.capacity}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>

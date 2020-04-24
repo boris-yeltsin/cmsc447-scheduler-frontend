@@ -8,7 +8,7 @@ import { SchedulerService } from 'src/app/scheduler.service';
   styleUrls: ['./classroom-upload.component.css']
 })
 export class ClassroomUploadComponent implements OnInit {
-  filename = 'No file selected.';
+  filename = 'Select a classrooms file to upload.';
 
   constructor(private schedulerService: SchedulerService) { }
 
@@ -24,7 +24,6 @@ export class ClassroomUploadComponent implements OnInit {
       },
       skipEmptyLines: true,
       complete: (result, file) => {
-        console.log(result.data, file);
         this.filename = file.name;
         this.schedulerService.classrooms.next(result.data);
       }

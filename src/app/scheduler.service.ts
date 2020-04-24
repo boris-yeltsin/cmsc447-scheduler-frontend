@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+
+import { environment } from './../environments/environment';
 
 export interface Classroom {
   classroom: string;
@@ -17,15 +22,70 @@ export interface Class {
   capacity: number;
 }
 
+export interface ScheduledClass extends Class {
+  classroom: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SchedulerService {
   classrooms: BehaviorSubject<Classroom[]>;
   classes: BehaviorSubject<Class[]>;
+  schedule: BehaviorSubject<ScheduledClass[]>;
+  error: BehaviorSubject<string>;
+  apiUrl: string = environment.apiUrl;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.classrooms = new BehaviorSubject<Classroom[]>([]);
     this.classes = new BehaviorSubject<Class[]>([]);
+    this.schedule = new BehaviorSubject<ScheduledClass[]>([]);
+    this.error = new BehaviorSubject<string>('');
+  }
+
+  validateAndGetSchedule(): void {
+    const classrooms = this.classrooms.value;
+    const classes = this.classes.value;
+    const classroomError = this.validateClassrooms(classrooms);
+    if(classroomError) {
+      this.errorHandler(classroomError);
+      return;
+    }
+    const classError = this.validateClasses(classes);
+    if(classError) {
+      this.errorHandler(classError);
+      return;
+    }
+    this.getSchedule(classes, classrooms).subscribe(
+      data => {
+        this.schedule.next(data);
+      },
+      error => {
+        this.errorHandler(error.message);
+      }
+    );
+  }
+
+  getSchedule(classes, classrooms): Observable<ScheduledClass[]> {
+    return this.http.post<ScheduledClass[]>(
+      this.apiUrl,
+      {classes: classes, classrooms: classrooms}
+    );
+  }
+
+  validateClassrooms(classrooms: Classroom[]): string | null {
+    if(classrooms.length == 0) {
+      return 'You must add classrooms before generating a schedule.';
+    }
+  }
+
+  validateClasses(classes: Class[]): string | null {
+    if(classes.length == 0) {
+      return 'You must add classes before generating a schedule.';
+    }
+  }
+
+  errorHandler(errorMessage: string) {
+    this.error.next(errorMessage);
   }
 }

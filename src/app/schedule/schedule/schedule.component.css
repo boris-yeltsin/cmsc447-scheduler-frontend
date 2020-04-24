@@ -1,0 +1,12 @@
+.table-container {
+    max-height: 700px;
+    overflow: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display: inline-block;
+  }
+
+td, th {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
