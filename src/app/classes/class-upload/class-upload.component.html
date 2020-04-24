@@ -1,0 +1,3 @@
+<button type="button" mat-raised-button color="primary" (click)="classUpload.click()">Browse...</button>
+<input hidden type="file" #classUpload name="Upload Classes CSV" id="classUpload" (change)="uploadListener($event)" accept=".csv" />
+<span id='filename'>{{filename}}</span>

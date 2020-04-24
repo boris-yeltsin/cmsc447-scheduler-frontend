@@ -1,0 +1,38 @@
+import { Component, OnInit } from '@angular/core';
+import * as Papa from 'papaparse';
+import { SchedulerService } from 'src/app/scheduler.service';
+
+@Component({
+  selector: 'app-class-upload',
+  templateUrl: './class-upload.component.html',
+  styleUrls: ['./class-upload.component.css']
+})
+export class ClassUploadComponent implements OnInit {
+  filename = 'No file selected.';
+
+  constructor(private schedulerService: SchedulerService) { }
+
+  ngOnInit(): void {
+  }
+
+  uploadListener($event: any): void {
+    let files = $event.srcElement.files;
+    Papa.parse(files[0], {
+      header: true,
+      transformHeader: (header) => {
+        return header
+          .replace(/\./g,'')
+          .replace(/\#/g,'')
+          .trim()
+          .replace(/ /g,'_')
+          .toLowerCase();
+      },
+      skipEmptyLines: true,
+      complete: (result, file) => {
+        console.log(result.data, file);
+        this.filename = file.name;
+        this.schedulerService.classes.next(result.data);
+      }
+    });
+  }
+}

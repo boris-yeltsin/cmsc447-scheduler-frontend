@@ -1,0 +1,9 @@
+table {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+td, th {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}

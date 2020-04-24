@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
 
 import { ClassesModule } from './classes/classes.module';
 import { ClassroomsModule } from './classrooms/classrooms.module'
@@ -21,7 +22,8 @@ import { ScheduleModule } from './schedule/schedule.module';
     MatStepperModule,
     ClassesModule,
     ClassroomsModule,
-    ScheduleModule
+    ScheduleModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

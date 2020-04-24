@@ -16,14 +16,18 @@
 <mat-horizontal-stepper [linear]="false" #stepper>
   <mat-step>
     <ng-template matStepLabel>Add Classrooms</ng-template>
-    <app-classes-wrapper></app-classes-wrapper>
+    <app-classroom-wrapper></app-classroom-wrapper>
+    <button mat-raised-button color="accent" matStepperNext>Next</button>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Add Classes</ng-template>
-    <app-classroom-wrapper></app-classroom-wrapper>
+    <app-classes-wrapper></app-classes-wrapper>
+    <button mat-button color="accent" matStepperPrevious>Back</button>
+    <button mat-raised-button color="accent" matStepperNext>Next</button>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Optimize Schedule</ng-template>
+    <ng-template matStepLabel>Generate Schedule</ng-template>
     <app-schedule-wrapper></app-schedule-wrapper>
+    <button mat-button color="accent" matStepperPrevious>Back</button>
   </mat-step>
 </mat-horizontal-stepper>
