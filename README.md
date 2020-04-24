@@ -6,6 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 1. Install [nodejs](https://nodejs.org/en/download/)
 2. Install the Angular CLI `npm install -g @angular/cli@latest`
+3. Run `npm install`
 
 ## User Guide
 
