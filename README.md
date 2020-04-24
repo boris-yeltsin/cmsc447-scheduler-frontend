@@ -7,6 +7,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 1. Install [nodejs](https://nodejs.org/en/download/)
 2. Install the Angular CLI `npm install -g @angular/cli@latest`
 
+## User Guide
+
+Provide the requested CSV input files and select 'Generate Schedule'.
+
+Example input files are provided in `example_inputs/`.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
