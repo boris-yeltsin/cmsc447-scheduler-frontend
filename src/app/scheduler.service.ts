@@ -65,19 +65,11 @@ export class SchedulerService {
         throw(e);
       })
     );
-    /*this.getSchedule(classes, classrooms).subscribe(
-      data => {
-        this.schedule.next(data);
-      },
-      error => {
-        this.errorHandler(error.message);
-      }
-    );*/
   }
 
   getSchedule(classes, classrooms): Observable<ScheduledClass[]> {
     return this.http.post<ScheduledClass[]>(
-      this.apiUrl,
+      this.apiUrl + '/schedule',
       {classes: classes, classrooms: classrooms}
     );
   }

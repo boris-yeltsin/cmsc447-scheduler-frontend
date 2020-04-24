@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import * as Papa from 'papaparse';
 import { tap } from 'rxjs/operators';
+
 import { SchedulerService } from 'src/app/scheduler.service';
 
 @Component({
@@ -24,4 +27,13 @@ export class ScheduleComponent implements OnInit {
     ).subscribe();
   }
 
+  exportSchedule(): void {
+    const csvSchedule = Papa.unparse(this.schedulerService.schedule.value);
+    var csvData = new Blob([csvSchedule], {type: 'text/csv;charset=utf-8;'});
+    var csvURL = window.URL.createObjectURL(csvData);
+    var tempLink = document.createElement('a');
+    tempLink.href = csvURL;
+    tempLink.setAttribute('download', 'optimizedSchedule.csv');
+    tempLink.click();
+  }
 }
