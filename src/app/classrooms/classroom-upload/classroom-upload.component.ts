@@ -22,7 +22,7 @@ export class ClassroomUploadComponent implements OnInit {
       transformHeader: (header) => {
         return header.replace(/ /g,'').toLowerCase();
       },
-      skipEmptyLines: true,
+      skipEmptyLines: 'greedy',
       complete: (result, file) => {
         this.filename = file.name;
         let e: string = this.schedulerService.validateClassrooms(result.data);

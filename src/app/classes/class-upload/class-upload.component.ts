@@ -27,7 +27,7 @@ export class ClassUploadComponent implements OnInit {
           .replace(/ /g,'_')
           .toLowerCase();
       },
-      skipEmptyLines: true,
+      skipEmptyLines: 'greedy',
       complete: (result, file) => {
         this.filename = file.name;
         let e = this.schedulerService.validateClasses(result.data);
