@@ -62,7 +62,6 @@ export class SchedulerService {
         this.schedule.next(data);
       }),
       catchError(e => {
-        console.error(e);
         this.httpErrorHandler(e);
         this.schedule.next([]);
         throw(e);
