@@ -25,6 +25,10 @@ export class ClassroomUploadComponent implements OnInit {
       skipEmptyLines: true,
       complete: (result, file) => {
         this.filename = file.name;
+        let e: string = this.schedulerService.validateClassrooms(result.data);
+        if(e) {
+          this.schedulerService.errorHandler(e);
+        }
         this.schedulerService.classrooms.next(result.data);
       }
     });

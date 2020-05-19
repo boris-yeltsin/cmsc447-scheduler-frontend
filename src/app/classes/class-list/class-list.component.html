@@ -1,5 +1,10 @@
 <div class="table-container mat-elevation-z8" *ngIf="dataSource.length">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="rowNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Row </th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+    </ng-container>
+
     <!-- Subject Column -->
     <ng-container matColumnDef="subject">
       <th mat-header-cell *matHeaderCellDef> Subject </th>

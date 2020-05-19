@@ -30,6 +30,10 @@ export class ClassUploadComponent implements OnInit {
       skipEmptyLines: true,
       complete: (result, file) => {
         this.filename = file.name;
+        let e = this.schedulerService.validateClasses(result.data);
+        if(e) {
+          this.schedulerService.errorHandler(e);
+        }
         this.schedulerService.classes.next(result.data);
       }
     });

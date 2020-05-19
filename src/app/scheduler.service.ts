@@ -62,7 +62,9 @@ export class SchedulerService {
         this.schedule.next(data);
       }),
       catchError(e => {
-        this.errorHandler(e.message);
+        console.error(e);
+        this.httpErrorHandler(e);
+        this.schedule.next([]);
         throw(e);
       })
     );
@@ -76,18 +78,69 @@ export class SchedulerService {
   }
 
   validateClassrooms(classrooms: Classroom[]): string | null {
+    let errorPrefix = "Error validating classrooms: ";
     if(classrooms.length == 0) {
-      return 'You must add classrooms before generating a schedule.';
+      return `${errorPrefix}: No classrooms added.`;
+    }
+    let row = 0;
+    for(let c of classrooms) {
+      row += 1;
+      let rowPrefix = `Row #${row}: `;
+      if(!c.capacity) {
+        return `${errorPrefix}${rowPrefix} Classrooms must have a capacity.`;
+      } else if(!c.classroom || this.isEmpty(c.classroom)) {
+        return `${errorPrefix}${rowPrefix} Classrooms must have a classroom name.`;
+      }
     }
   }
 
+  re_time = new RegExp('^(mwf|tt|mw+)(\\d+)$');
   validateClasses(classes: Class[]): string | null {
+    let errorPrefix = "Error validating classes: ";
     if(classes.length == 0) {
-      return 'You must add classes before generating a schedule.';
+      return `${errorPrefix} No classes added.`;
+    }
+    let row = 0;
+    for(let c of classes) {
+      row += 1;
+      let rowPrefix = `Row #${row}: `;
+      if(!c.capacity) {
+        return `${errorPrefix}${rowPrefix} Classes must have a capacity.`;
+      } else if(!c.course || this.isEmpty(c.course)) {
+        return `${errorPrefix}${rowPrefix} Classes must have a course number.`;
+      } else if(!c.course_title || this.isEmpty(c.course_title)) {
+        return `${errorPrefix}${rowPrefix} Classes must have a title.`;
+      } else if(!c.instructor_real_name || this.isEmpty(c.instructor_real_name)) {
+        return `${errorPrefix}${rowPrefix} Classes must have a instructor.`;
+      } else if(!c.sec || this.isEmpty(c.sec)) {
+        return `${errorPrefix}${rowPrefix} Classes must have a section.`;
+      } else if(!c.subject || this.isEmpty(c.subject)) {
+        return `${errorPrefix}${rowPrefix} Classes must have a subject.`;
+      } else if(!c.time || this.isEmpty(c.time)) {
+        return `${errorPrefix}${rowPrefix} Classes must have a time.`;
+      }
+
+      if(!this.re_time.test(c.time.toLowerCase())) {
+        return `${errorPrefix}${rowPrefix} Time field must begin with 'mw', 'mwf', or 'tt', followed by an integer time. Invalid time string: "${c.time}"`;
+      }
     }
   }
 
-  errorHandler(errorMessage: string) {
-    this.error.next(errorMessage);
+  isEmpty(s: string): boolean {
+    return (s.length === 0 || !s.trim());
+  }
+
+  httpErrorHandler(e) {
+    if(e.status == 400) {
+      this.errorHandler('Failed to generate schedule: hard constraint violated.');
+    } else if(e.status == 500) {
+      this.errorHandler('Failed to generate schedule: Optaplanner solving failed, unexpected error encountered.');
+    } else {
+      this.errorHandler('Failed to generate schedule: Optaplanner solving failed, unexpected error encountered: ' + e.message);
+    }
+  }
+
+  errorHandler(errorText) {
+    this.error.next(errorText);
   }
 }

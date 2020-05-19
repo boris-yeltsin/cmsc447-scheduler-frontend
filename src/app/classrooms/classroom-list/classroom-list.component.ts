@@ -8,7 +8,7 @@ import { SchedulerService } from 'src/app/scheduler.service';
   styleUrls: ['./classroom-list.component.css']
 })
 export class ClassroomListComponent implements OnInit {
-  displayedColumns: string[] = ['classroom', 'capacity'];
+  displayedColumns: string[] = ['rowNumber', 'classroom', 'capacity'];
   dataSource;
 
   constructor(private schedulerService: SchedulerService) { }

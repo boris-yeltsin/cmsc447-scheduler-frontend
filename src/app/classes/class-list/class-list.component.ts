@@ -9,7 +9,7 @@ import { SchedulerService } from 'src/app/scheduler.service';
 })
 export class ClassListComponent implements OnInit {
   displayedColumns: string[] = [
-    'subject', 'course', 'course_title', 'ver', 'sec', 'instructor_real_name',
+    'rowNumber', 'subject', 'course', 'course_title', 'ver', 'sec', 'instructor_real_name',
     'time', 'capacity'
   ];
   dataSource;
