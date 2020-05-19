@@ -94,7 +94,7 @@ export class SchedulerService {
     }
   }
 
-  re_time = new RegExp('^(mwf|tt|mw+)(\\d+)$');
+  re_time = new RegExp('^(mwf|tt|mw)(\\d+)$');
   validateClasses(classes: Class[]): string | null {
     let errorPrefix = "Error validating classes: ";
     if(classes.length == 0) {
