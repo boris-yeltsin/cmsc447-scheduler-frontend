@@ -24,6 +24,7 @@ export interface Class {
 
 export interface ScheduledClass extends Class {
   classroom: string;
+  classroom_capacity: number;
 }
 
 @Injectable({

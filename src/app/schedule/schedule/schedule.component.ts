@@ -13,7 +13,7 @@ import { SchedulerService } from 'src/app/scheduler.service';
 export class ScheduleComponent implements OnInit {
   displayedColumns: string[] = [
     'subject', 'course', 'course_title', 'ver', 'sec', 'instructor_real_name',
-    'time', 'classroom', 'capacity'
+    'time', 'classroom', 'capacity', 'classroom_capacity'
   ];
   dataSource;
 
