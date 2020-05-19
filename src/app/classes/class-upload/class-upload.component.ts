@@ -29,12 +29,17 @@ export class ClassUploadComponent implements OnInit {
       },
       skipEmptyLines: 'greedy',
       complete: (result, file) => {
-        this.filename = file.name;
-        let e = this.schedulerService.validateClasses(result.data);
-        if(e) {
-          this.schedulerService.errorHandler(e);
+        if(!this.schedulerService.fileTypeIsValid(file)) {
+          this.schedulerService.errorHandler("Invalid file type. Please upload a CSV.");
+          return;
+        } else {
+          this.filename = file.name;
+          let e = this.schedulerService.validateClasses(result.data);
+          if(e) {
+            this.schedulerService.errorHandler(e);
+          }
+          this.schedulerService.classes.next(result.data);
         }
-        this.schedulerService.classes.next(result.data);
       }
     });
   }

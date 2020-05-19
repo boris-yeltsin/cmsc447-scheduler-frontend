@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Papa from 'papaparse';
 import { SchedulerService } from 'src/app/scheduler.service';
+import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-classroom-upload',
@@ -24,12 +25,17 @@ export class ClassroomUploadComponent implements OnInit {
       },
       skipEmptyLines: 'greedy',
       complete: (result, file) => {
-        this.filename = file.name;
-        let e: string = this.schedulerService.validateClassrooms(result.data);
-        if(e) {
-          this.schedulerService.errorHandler(e);
+        if(!this.schedulerService.fileTypeIsValid(file)) {
+          this.schedulerService.errorHandler("Invalid file type. Please upload a CSV.");
+          return;
+        } else {
+          this.filename = file.name;
+          let e: string = this.schedulerService.validateClassrooms(result.data);
+          if(e) {
+            this.schedulerService.errorHandler(e);
+          }
+          this.schedulerService.classrooms.next(result.data);
         }
-        this.schedulerService.classrooms.next(result.data);
       }
     });
   }

@@ -125,6 +125,13 @@ export class SchedulerService {
     }
   }
 
+  fileTypeIsValid(file: File): boolean {
+    if(file.type != 'application/vnd.ms-excel' && file.type != 'text/csv' && file.name.split('.').pop() != 'csv') {
+      return false;
+    }
+    return true;
+  }
+
   isEmpty(s: string): boolean {
     return (s.length === 0 || !s.trim());
   }
