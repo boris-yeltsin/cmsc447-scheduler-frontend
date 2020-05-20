@@ -163,7 +163,7 @@ export class SchedulerService {
       }
     }
     if(violatedConstraints.length > 0) {
-      this.errorHandler(`The displayed schedule is invalid. The system could not generate a schedule for the given input. The following hard constraints were violated by the highlighted rows: ${violatedConstraints.join(', ')}`);
+      this.errorHandler(`The system could not generate a valid schedule for the given input. Some classes could not be scheduled without violating hard constraints. The following hard constraints were violated by the highlighted rows: ${violatedConstraints.join(', ')}`);
     }
   }
 }
