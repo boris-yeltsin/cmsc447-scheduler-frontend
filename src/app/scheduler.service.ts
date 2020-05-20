@@ -25,6 +25,7 @@ export interface Class {
 export interface ScheduledClass extends Class {
   classroom: string;
   classroom_capacity: number;
+  hard_constraint_violated: boolean;
 }
 
 @Injectable({
@@ -59,7 +60,8 @@ export class SchedulerService {
     }
     return this.getSchedule(classes, classrooms).pipe(
       map(data => {
-        this.schedule.next(data);
+        this.schedule.next(data.schedule);
+        this.processConstraintMatchTotals(data.constraintMatchTotals);
       }),
       catchError(e => {
         this.httpErrorHandler(e);
@@ -69,7 +71,7 @@ export class SchedulerService {
     );
   }
 
-  getSchedule(classes, classrooms): Observable<ScheduledClass[]> {
+  getSchedule(classes, classrooms): Observable<any> {
     return this.http.post<ScheduledClass[]>(
       this.apiUrl + '/schedule',
       {classes: classes, classrooms: classrooms}
@@ -137,16 +139,31 @@ export class SchedulerService {
   }
 
   httpErrorHandler(e) {
-    if(e.status == 400) {
+    /*if(e.status == 400) {
       this.errorHandler('Failed to generate schedule: hard constraint violated.');
     } else if(e.status == 500) {
-      this.errorHandler('Failed to generate schedule: Optaplanner solving failed, unexpected error encountered.');
+      this.errorHandler('Failed to generate schedule: Schedule solving failed, unexpected error encountered.');
     } else {
-      this.errorHandler('Failed to generate schedule: Optaplanner solving failed, unexpected error encountered: ' + e.message);
-    }
+      this.errorHandler('Failed to generate schedule: Schedule solving failed, unexpected error encountered: ' + e.message);
+    }*/
+    this.errorHandler('Failed to generate schedule: Schedule solving failed, unexpected error encountered: ' + e.message);
   }
 
   errorHandler(errorText) {
     this.error.next(errorText);
+  }
+
+  processConstraintMatchTotals(cmt) {
+    let violatedConstraints: string[] = [];
+    for(let m of cmt) {
+      let hardScore = parseInt(m.score.HardSoftScore.split('hard')[0]);
+      if(hardScore < 0) {
+        console.log('hard constraint violated!' + m.constraintName);
+        violatedConstraints.push(m.constraintName);
+      }
+    }
+    if(violatedConstraints.length > 0) {
+      this.errorHandler(`The displayed schedule is invalid. The system could not generate a schedule for the given input. The following hard constraints were violated by the highlighted rows: ${violatedConstraints.join(', ')}`);
+    }
   }
 }
